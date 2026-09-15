@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Node
+node_modules/
+dist/
+.env
+
+# 通用
+.DS_Store
+*.log
+.idea/
+.vscode/
+build/
