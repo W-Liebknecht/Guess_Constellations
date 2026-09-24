@@ -1,0 +1,29 @@
+# Guess_Constellations - runtime dependencies
+# Verified working on Python 3.13.5 (CPython), Windows/Linux desktop.
+#
+# Install:
+#   python -m pip install -r requirements.txt
+#
+# Run:
+#   python main.py                 # normal quiz
+#   python main.py -t              # verify all stimulus images load
+#   python main.py -i              # (flag exists but is currently a no-op)
+#   python main.py -d 0.6          # target difficulty sum for the 3 drawn items
+
+# --- Direct dependencies (imported by main.py) ---
+customtkinter==6.0.0     # themed Tkinter widget set; the entire GUI layer
+Pillow==12.0.0           # PIL.Image: load, thumbnail and verify the .png stimuli
+
+# --- Transitive dependencies (pulled in by customtkinter; pinned for reproducibility) ---
+darkdetect==0.8.0        # OS light/dark theme detection used by customtkinter
+packaging==25.0          # version parsing used by customtkinter
+
+# --- Not installable from PyPI ---
+# tkinter (tkinter.messagebox, tkinter.TkVersion 8.6) ships with CPython.
+# It is NOT a pip package and must be provided by the interpreter:
+#   Debian/Ubuntu:  sudo apt install python3-tk
+#   Fedora:         sudo dnf install python3-tkinter
+#   macOS/Windows:  included with the python.org installer
+#
+# --- Build-only tool (not needed to run from source) ---
+# pyinstaller            # only for producing dist/main.exe via main.spec
