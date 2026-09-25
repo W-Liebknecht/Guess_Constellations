@@ -1,7 +1,7 @@
 
 <h1 align="center">
     	<a href="https://github.com/W-Liebknecht/Guess_Constellations/">
-            <img src="https://github.com/W-Liebknecht/Guess_Constellations/stimuli_images/Cyg.png" alt="Cyg"/>
+            <img src="https://github.com/W-Liebknecht/Guess_Constellations/blob/main/stimuli_images/Cyg.png" alt="Cyg"/>
   	    </a>
 			<br/> A Constellations Guessing Game
 </h1>
