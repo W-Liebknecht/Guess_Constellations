@@ -1,4 +1,12 @@
-# Guess_Constellations
+
+<h1 align="center">
+    	<a href="https://github.com/W-Liebknecht/Guess_Constellations/">
+            <img src="https://github.com/W-Liebknecht/Guess_Constellations/stimuli_images/Cyg.png" alt="Cyg"/>
+  	    </a>
+			<br/> A Constellations Guessing Game
+</h1>
+
+# Constellations Guessing Game
 
 A small desktop quiz: it shows a constellation star map and you type its
 Chinese name. All 88 constellations are included.
