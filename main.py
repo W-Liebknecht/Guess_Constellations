@@ -35,7 +35,7 @@ enable_high_dpi()
 
 
 class CharacterMatchingTest:
-    def __init__(self, root, test_mode=False, infty_mode=False, target_difficulty=0.7):
+    def __init__(self, root, test_mode=False, infty_mode=False, target_difficulty=1.2):
         self.root = root
 
         # 测试参数
@@ -55,8 +55,8 @@ class CharacterMatchingTest:
 
         # 无限模式参数
         self.difficulty_sum = 0.0          # 已出题目的难度累加
-        self.avg_min = 0.0                 # 平均值下限
-        self.avg_max = 0.3                 # 平均值上限
+        self.avg_min = 0.3                 # 平均值下限
+        self.avg_max = 0.5                 # 平均值上限
         self.avg_target = 0.15             # 平均值目标（取区间中点）
         self.deviation = 0.15              # 允许单题偏离目标的幅度
 
