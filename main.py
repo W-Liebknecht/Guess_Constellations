@@ -6,6 +6,7 @@ import csv
 import os
 import sys
 import argparse
+import math
 from datetime import datetime
 
 # 图片在窗口里的逻辑显示尺寸(不随屏幕缩放变化)。
@@ -51,6 +52,13 @@ class CharacterMatchingTest:
         self.results = []  # 存储测试结果
 
         self.root.title("看星图猜星座 - 无限模式" if self.infty_mode else "看星图猜星座")
+
+        # 无限模式参数
+        self.difficulty_sum = 0.0          # 已出题目的难度累加
+        self.avg_min = 0.0                 # 平均值下限
+        self.avg_max = 0.3                 # 平均值上限
+        self.avg_target = 0.15             # 平均值目标（取区间中点）
+        self.deviation = 0.15              # 允许单题偏离目标的幅度
 
         # 创建GUI界面
         self.create_widgets()
@@ -196,16 +204,41 @@ class CharacterMatchingTest:
     def pick_current_item(self):
         """取出当前要显示的题目；返回 None 表示没有题目可出了"""
         if self.infty_mode:
-            # 无限模式：每次都从全部星座里随机抽，只是避免和上一题连续重复
+            # 避免和上一题连续重复
             pool = [item for item in self.test_items if item is not self.current_item]
             if not pool:
                 pool = self.test_items
-            return random.choice(pool) if pool else None
+            if not pool:
+                return None
+
+            # --- 根据当前平均值决定下一题的目标难度 ---
+            # 已答题数为 0 时，没有历史平均值，直接以目标均值为准
+            if self.answered_count == 0:
+                target = self.avg_target
+            else:
+                current_avg = self.difficulty_sum / self.answered_count
+                # 如果当前均值已经偏高，就把目标压低；偏低就允许高一点
+                # 用 (target - current_avg) 修正，让均值往目标靠
+                target = self.avg_target + (self.avg_target - current_avg)
+                # 把目标限制在 [avg_min, avg_max] 区间内
+                target = max(self.avg_min, min(self.avg_max, target))
+
+            # --- 加权随机：离目标越近权重越大，但仍有概率抽到偏离的题 ---
+            # weight = exp(-(d - target)^2 / (2 * sigma^2))
+            sigma = max(self.deviation, 1e-6)
+            weights = []
+            for item in pool:
+                d = item['difficulty']
+                w = math.exp(-((d - target) ** 2) / (2 * sigma ** 2))
+                weights.append(w)
+
+            # random.choices 按权重抽样，天然允许偏离
+            chosen = random.choices(pool, weights=weights, k=1)[0]
+            return chosen
 
         if self.current_item_index < len(self.selected_items):
             return self.selected_items[self.current_item_index]
         return None
-
     def show_current_item(self):
         """显示当前测试项"""
         # 图片有可能损坏，失败时换一题重试；最多10次，避免无限递归
