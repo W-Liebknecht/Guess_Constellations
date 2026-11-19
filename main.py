@@ -55,8 +55,8 @@ class CharacterMatchingTest:
 
         # 无限模式参数
         self.difficulty_sum = 0.0          # 已出题目的难度累加
-        self.avg_min = 0.3                 # 平均值下限
-        self.avg_max = 0.5                 # 平均值上限
+        self.avg_min = 0.4                 # 平均值下限
+        self.avg_max = 0.6                 # 平均值上限
         self.avg_target = 0.15             # 平均值目标（取区间中点）
         self.deviation = 0.15              # 允许单题偏离目标的幅度
 
@@ -378,7 +378,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='汉字匹配测试程序')
     parser.add_argument('-t', '--test', action='store_true',
                        help='测试模式：验证所有图片是否能加载')
-    parser.add_argument('-d', '--difficulty', type=float, default=0.6,
+    parser.add_argument('-d', '--difficulty', type=float, default=1.2,
                        help='设置目标难度总和(默认0.6)')
     parser.add_argument('-i', '--infty', action='store_true',
                        help='无限模式：连续随机出题，不设题数上限，并在控制台打印每题对错')
